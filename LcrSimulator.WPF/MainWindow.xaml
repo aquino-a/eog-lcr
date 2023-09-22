@@ -51,6 +51,16 @@
             </Grid.RowDefinitions>
             <Grid>
                 <charting:Chart>
+                    <charting:Chart.Axes>
+                        <charting:LinearAxis
+                                Orientation="Y"
+                                Title="Turns"
+                                FontWeight="Bold" />
+                        <charting:LinearAxis
+                                Orientation="X"
+                                Title="Games"
+                                FontWeight="Bold" />
+                    </charting:Chart.Axes>
                     <charting:Chart.Series>
                         <charting:LineSeries
                             Title="Game"
