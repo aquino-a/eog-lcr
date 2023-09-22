@@ -11,6 +11,23 @@
     <Grid>
         <Grid.Resources>
             <local:SettingConverter x:Key="SettingConverter" />
+            <Style TargetType="Button">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="MinWidth" Value="100" />
+            </Style>
+            <Style TargetType="StackPanel">
+                <Setter Property="Margin" Value="10" />
+            </Style>
+            <Style x:Key="VerticalSeparatorStyle" TargetType="Separator">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Separator">
+                            <Border Background="{TemplateBinding Panel.Background}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -31,7 +48,7 @@
             <TextBox x:Name="playerCount" Text="{Binding CurrentSetting.PlayerCount}" />
             <Label>Number of Games</Label>
             <TextBox x:Name="gameCount" Text="{Binding CurrentSetting.GameCount}" />
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Command="{Binding PlayCommand}" Content="PLAY">
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource SettingConverter}">
@@ -44,7 +61,13 @@
                 <Button Command="{Binding CancelCommand}" >CANCEL</Button>
             </StackPanel>
         </StackPanel>
+        <Separator Style="{StaticResource VerticalSeparatorStyle}" Width="1" HorizontalAlignment="Right" />
         <Grid Grid.Column="1">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Margin" Value="10" />
+                </Style>
+            </Grid.Style>
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*" />
                 <RowDefinition />
@@ -151,7 +174,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
-                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="5*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding Number}" />
                                     <TextBlock Grid.Column="1" Text="Winner!" Style="{StaticResource WinnerTextStyle}" />
