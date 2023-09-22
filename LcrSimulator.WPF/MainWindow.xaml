@@ -8,13 +8,16 @@
         mc:Ignorable="d"
         Title="LCR Simulator" Height="450" Width="800">
     <Grid>
+        <Grid.Resources>
+            <local:SettingConverter x:Key="SettingConverter" />
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <StackPanel>
             <Label>Preset</Label>
-            <ComboBox ItemsSource="{Binding Presets}" SelectedValue="{Binding CurrentPreset}">
+            <ComboBox ItemsSource="{Binding Presets}" SelectedValue="{Binding CurrentSetting}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type core:Setting}">
                         <Grid>
@@ -24,11 +27,19 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Label>Numbers of Players</Label>
-            <TextBox Text="{Binding CurrentSetting.PlayerCount}" />
+            <TextBox x:Name="playerCount" Text="{Binding CurrentSetting.PlayerCount}" />
             <Label>Number of Games</Label>
-            <TextBox Text="{Binding CurrentSetting.GameCount}" />
+            <TextBox x:Name="gameCount" Text="{Binding CurrentSetting.GameCount}" />
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding PlayCommand}" >PLAY</Button>
+                <Button Command="{Binding PlayCommand}" Content="PLAY">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource SettingConverter}">
+                            <Binding Path="Text" ElementName="playerCount" />
+                            <Binding Path="Text" ElementName="gameCount" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+
                 <Button Command="{Binding CancelCommand}" >CANCEL</Button>
             </StackPanel>
         </StackPanel>

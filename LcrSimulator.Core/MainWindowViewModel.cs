@@ -7,11 +7,15 @@ namespace LcrSimulator.Core
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PlayCommand))]
+        [NotifyPropertyChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(GameCount))]
         [NotifyPropertyChangedFor(nameof(PlayerCount))]
+        [NotifyPropertyChangedFor(nameof(PlayCommand))]
+        [NotifyPropertyChangedFor(nameof(CancelCommand))]
         public Setting _currentSetting;
 
         private readonly ISimulator _simulator;
@@ -20,7 +24,7 @@ namespace LcrSimulator.Core
         public MainWindowViewModel(ISimulator simulator)
         {
             _simulator = simulator;
-            PlayCommand = new RelayCommand(Play, () => _currentSetting != null && _cancelSource == null);
+            PlayCommand = new RelayCommand<Setting>(setting => Play(setting), (setting) => setting != null && setting.PlayerCount >= 3 && setting.GameCount > 0 && _cancelSource == null);
             CancelCommand = new RelayCommand(Cancel, () => _cancelSource != null && _cancelSource.Token.CanBeCanceled);
         }
 
@@ -33,14 +37,14 @@ namespace LcrSimulator.Core
 
         public List<Setting> Presets { get; set; } = new List<Setting>()
         {
-            new Setting{ GameCount = 3, PlayerCount = 100 },
-            new Setting{ GameCount = 4, PlayerCount = 100 },
-            new Setting{ GameCount = 5, PlayerCount = 100 },
-            new Setting{ GameCount = 5, PlayerCount = 1_000 },
-            new Setting{ GameCount = 5, PlayerCount = 10_000 },
-            new Setting{ GameCount = 5, PlayerCount = 100_000 },
-            new Setting{ GameCount = 6, PlayerCount = 100 },
-            new Setting{ GameCount = 7, PlayerCount = 100 },
+            new Setting{ PlayerCount = 3, GameCount = 100 },
+            new Setting{ PlayerCount = 4, GameCount = 100 },
+            new Setting{ PlayerCount = 5, GameCount = 100 },
+            new Setting{ PlayerCount = 5, GameCount = 1_000 },
+            new Setting{ PlayerCount = 5, GameCount = 10_000 },
+            new Setting{ PlayerCount = 5, GameCount = 100_000 },
+            new Setting{ PlayerCount = 6, GameCount = 100 },
+            new Setting{ PlayerCount = 7, GameCount = 100 },
         };
 
         private void Cancel()
@@ -53,9 +57,9 @@ namespace LcrSimulator.Core
             _cancelSource.Cancel();
         }
 
-        private async void Play()
+        private async void Play(Setting setting)
         {
-            if (_cancelSource != null)
+            if (_cancelSource != null || setting == null)
             {
                 return;
             }
@@ -65,7 +69,7 @@ namespace LcrSimulator.Core
                 _cancelSource = new CancellationTokenSource();
                 var result = await Task.Factory.StartNew(() =>
                 {
-                    return _simulator.Simulate(CurrentSetting.PlayerCount, CurrentSetting.GameCount);
+                    return _simulator.Simulate(setting.PlayerCount, setting.GameCount);
                 }, _cancelSource.Token);
 
                 CurrentResult = result;
