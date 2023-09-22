@@ -3,7 +3,6 @@
     public class ArraySimulator : ISimulator
     {
         private static readonly char[] DICE_FACES = { 'L', 'C', 'R', '.', '.', '.' };
-        private record GameResult(int turns, int winner);
 
         private Random _random = new();
 
