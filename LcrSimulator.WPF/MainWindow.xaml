@@ -138,11 +138,7 @@
             <ListView Grid.Row="1" ItemsSource="{Binding Players}" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListView.Resources>
                     <Style x:Key="PlayerFigureStyle" TargetType="Border">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsWinner}" Value="true">
-                                <Setter Property="Background" Value="Orange" />
-                            </DataTrigger>
-                        </Style.Triggers>
+
                         <Setter Property="BorderThickness" Value="2" />
                     </Style>
                     <Style x:Key="NumberStyle" TargetType="Border">
@@ -156,6 +152,8 @@
                             <DataTrigger Binding="{Binding IsWinner}" Value="true">
                                 <Setter Property="Visibility" Value="Visible" />
                                 <Setter Property="TextAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="2,0" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -166,19 +164,50 @@
                         </UniformGrid>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-
                             <Border Style="{StaticResource PlayerFigureStyle}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="5*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Number}" />
-                                    <TextBlock Grid.Column="1" Text="Winner!" Style="{StaticResource WinnerTextStyle}" />
-                                </Grid>
+                                <Viewbox>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="20" />
+                                                    <Setter Property="Padding" Value="1" />
+                                                    <Setter Property="Width" Value="20" />
+                                                    <Setter Property="Height" Value="20" />
+                                                    <Setter Property="BorderThickness" Value="1" />
+                                                    <Setter Property="BorderBrush" Value="Black" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsWinner}" Value="true">
+                                                            <Setter Property="Background" Value="Orange" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding Number}" TextAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                        <TextBlock Grid.Column="1" Text="Winner!" Style="{StaticResource WinnerTextStyle}" />
+                                    </Grid>
+                                </Viewbox>
                             </Border>
                         </Grid>
                     </DataTemplate>
