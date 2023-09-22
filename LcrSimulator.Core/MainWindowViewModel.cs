@@ -1,21 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Windows.Input;
 
 namespace LcrSimulator.Core
 {
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(PlayCommand))]
-        [NotifyPropertyChangedFor(nameof(CancelCommand))]
+        [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
+        [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(GameCount))]
         [NotifyPropertyChangedFor(nameof(PlayerCount))]
-        [NotifyPropertyChangedFor(nameof(PlayCommand))]
-        [NotifyPropertyChangedFor(nameof(CancelCommand))]
+        [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
+        [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public Setting _currentSetting;
 
         private readonly ISimulator _simulator;
@@ -28,10 +27,10 @@ namespace LcrSimulator.Core
             CancelCommand = new RelayCommand(Cancel, () => _cancelSource != null && _cancelSource.Token.CanBeCanceled);
         }
 
-        public ICommand CancelCommand { get; private set; }
+        public IRelayCommand CancelCommand { get; private set; }
         public int GameCount { get; set; }
 
-        public ICommand PlayCommand { get; private set; }
+        public IRelayCommand PlayCommand { get; private set; }
 
         public int PlayerCount { get; set; }
 
@@ -67,16 +66,25 @@ namespace LcrSimulator.Core
             try
             {
                 _cancelSource = new CancellationTokenSource();
-                var result = await Task.Factory.StartNew(() =>
+                var simulationTask = Task.Factory.StartNew(() =>
                 {
                     return _simulator.Simulate(setting.PlayerCount, setting.GameCount);
                 }, _cancelSource.Token);
+
+                PlayCommand.NotifyCanExecuteChanged();
+                CancelCommand.NotifyCanExecuteChanged();
+
+                var result = await simulationTask;
 
                 CurrentResult = result;
             }
             finally
             {
+                _cancelSource?.Dispose();
                 _cancelSource = null;
+
+                PlayCommand.NotifyCanExecuteChanged();
+                CancelCommand.NotifyCanExecuteChanged();
             }
         }
     }
