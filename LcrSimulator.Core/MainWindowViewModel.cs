@@ -6,6 +6,7 @@ namespace LcrSimulator.Core
     public partial class MainWindowViewModel : ObservableObject
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(GameResults))]
         [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
@@ -29,6 +30,15 @@ namespace LcrSimulator.Core
 
         public IRelayCommand CancelCommand { get; private set; }
         public int GameCount { get; set; }
+
+        public IEnumerable<KeyValuePair<int, int>> GameResults
+        {
+            get
+            {
+                return CurrentResult?.GameResults
+                    .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber));
+            }
+        }
 
         public IRelayCommand PlayCommand { get; private set; }
 

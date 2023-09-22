@@ -51,6 +51,14 @@
             </Grid.RowDefinitions>
             <Grid>
                 <charting:Chart>
+                    <charting:Chart.Series>
+                        <charting:LineSeries
+                            Title="Game"
+                            ItemsSource="{Binding GameResults}"
+                            DependentValueBinding="{Binding Path=Key}"
+                            IndependentValueBinding="{Binding Path=Value}">
+                        </charting:LineSeries>
+                    </charting:Chart.Series>
                 </charting:Chart>
             </Grid>
         </Grid>

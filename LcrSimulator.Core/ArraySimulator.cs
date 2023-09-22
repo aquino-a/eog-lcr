@@ -36,6 +36,7 @@
                         .OrderByDescending(g => g.Count())
                         .First()
                         .Key,
+                GameResults = results
             };
         }
 
