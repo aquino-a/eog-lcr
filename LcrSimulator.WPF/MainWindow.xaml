@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LcrSimulator.WPF"
         xmlns:core="clr-namespace:LcrSimulator.Core;assembly=LcrSimulator.Core"
+        xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=DotNetProjects.DataVisualization.Toolkit"
         mc:Ignorable="d"
         Title="LCR Simulator" Height="450" Width="800">
     <Grid>
@@ -43,5 +44,15 @@
                 <Button Command="{Binding CancelCommand}" >CANCEL</Button>
             </StackPanel>
         </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <charting:Chart>
+                </charting:Chart>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

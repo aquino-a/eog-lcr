@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetProjects.WpfToolkit.DataVisualization" Version="6.1.94" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LcrSimulator.Core\LcrSimulator.Core.csproj" />
   </ItemGroup>
 
