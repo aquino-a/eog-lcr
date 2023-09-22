@@ -4,9 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LcrSimulator.WPF"
+        xmlns:core="clr-namespace:LcrSimulator.Core;assembly=LcrSimulator.Core"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="LCR Simulator" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Label>Preset</Label>
+            <ComboBox ItemsSource="{Binding Presets}" SelectedValue="{Binding CurrentPreset}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type core:Setting}">
+                        <Grid>
+                            <TextBlock Text="{Binding Display}" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Label>Numbers of Players</Label>
+            <TextBox Text="{Binding CurrentSetting.PlayerCount}" />
+            <Label>Number of Games</Label>
+            <TextBox Text="{Binding CurrentSetting.GameCount}" />
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding PlayCommand}" >PLAY</Button>
+                <Button Command="{Binding CancelCommand}" >CANCEL</Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
