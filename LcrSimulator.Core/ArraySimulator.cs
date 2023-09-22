@@ -27,17 +27,7 @@
 
             var turns = results.Select(gr => gr.Turns).ToArray();
 
-            return new SimulationResult
-            {
-                Longest = turns.Max(),
-                Average = (int)turns.Average(),
-                Shortest = turns.Min(),
-                MostWins = results.GroupBy(gr => gr.Winner)
-                        .OrderByDescending(g => g.Count())
-                        .First()
-                        .Key,
-                GameResults = results
-            };
+            return new SimulationResult(results);
         }
 
         private int[] GetInitialPlayers(int playerCount)
