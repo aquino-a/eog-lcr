@@ -57,6 +57,11 @@
                             ItemsSource="{Binding GameResults}"
                             DependentValueBinding="{Binding Path=Key}"
                             IndependentValueBinding="{Binding Path=Value}">
+                            <charting:LineSeries.DataPointStyle>
+                                <Style TargetType="charting:LineDataPoint">
+                                    <Setter Property="Template" Value="{x:Null}" />
+                                </Style>
+                            </charting:LineSeries.DataPointStyle>
                         </charting:LineSeries>
                     </charting:Chart.Series>
                 </charting:Chart>
