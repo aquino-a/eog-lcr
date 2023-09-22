@@ -64,6 +64,19 @@
                                 </Style>
                             </charting:LineSeries.DataPointStyle>
                         </charting:LineSeries>
+                        <charting:LineSeries
+                            Title="Average"
+                            ItemsSource="{Binding AveragePoints}"
+                            DependentValueBinding="{Binding Path=Key}"
+                            IndependentValueBinding="{Binding Path=Value}">
+                            <charting:LineSeries.DataPointStyle>
+                                <Style TargetType="charting:LineDataPoint">
+                                    <Setter Property="Template" Value="{x:Null}" />
+                                    <Setter Property="Background" Value="Green" />
+                                    <Setter Property="BorderThickness" Value=".5" />
+                                </Style>
+                            </charting:LineSeries.DataPointStyle>
+                        </charting:LineSeries>
                     </charting:Chart.Series>
                 </charting:Chart>
             </Grid>

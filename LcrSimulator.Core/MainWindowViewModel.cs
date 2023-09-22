@@ -7,6 +7,7 @@ namespace LcrSimulator.Core
     {
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(GameResults))]
+        [NotifyPropertyChangedFor(nameof(AveragePoints))]
         [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
@@ -28,7 +29,25 @@ namespace LcrSimulator.Core
             CancelCommand = new RelayCommand(Cancel, () => _cancelSource != null && _cancelSource.Token.CanBeCanceled);
         }
 
+        public IEnumerable<KeyValuePair<int, int>> AveragePoints
+        {
+            get
+            {
+                if (CurrentResult == null)
+                {
+                    return Enumerable.Empty<KeyValuePair<int, int>>();
+                }
+
+                return new[]
+                {
+                    new KeyValuePair<int, int>(CurrentResult.Average, 0),
+                    new KeyValuePair<int, int>(CurrentResult.Average, CurrentResult.GameResults.Length),
+                };
+            }
+        }
+
         public IRelayCommand CancelCommand { get; private set; }
+
         public int GameCount { get; set; }
 
         public IEnumerable<KeyValuePair<int, int>> GameResults
