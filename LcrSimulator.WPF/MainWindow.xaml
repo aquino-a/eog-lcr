@@ -77,6 +77,28 @@
                                 </Style>
                             </charting:LineSeries.DataPointStyle>
                         </charting:LineSeries>
+                        <charting:ScatterSeries
+                            Title="Shortest"
+                            ItemsSource="{Binding ShortestPoints}"
+                            DependentValueBinding="{Binding Path=Key}"
+                            IndependentValueBinding="{Binding Path=Value}">
+                            <charting:ScatterSeries.DataPointStyle>
+                                <Style TargetType="charting:ScatterDataPoint">
+                                    <Setter Property="Background" Value="Purple" />
+                                </Style>
+                            </charting:ScatterSeries.DataPointStyle>
+                        </charting:ScatterSeries>
+                        <charting:ScatterSeries
+                            Title="Longest"
+                            ItemsSource="{Binding LongestPoints}"
+                            DependentValueBinding="{Binding Path=Key}"
+                            IndependentValueBinding="{Binding Path=Value}">
+                            <charting:ScatterSeries.DataPointStyle>
+                                <Style TargetType="charting:ScatterDataPoint">
+                                    <Setter Property="Background" Value="Yellow" />
+                                </Style>
+                            </charting:ScatterSeries.DataPointStyle>
+                        </charting:ScatterSeries>
                     </charting:Chart.Series>
                 </charting:Chart>
             </Grid>

@@ -8,6 +8,8 @@ namespace LcrSimulator.Core
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(GameResults))]
         [NotifyPropertyChangedFor(nameof(AveragePoints))]
+        [NotifyPropertyChangedFor(nameof(ShortestPoints))]
+        [NotifyPropertyChangedFor(nameof(LongestPoints))]
         [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
@@ -55,7 +57,17 @@ namespace LcrSimulator.Core
             get
             {
                 return CurrentResult?.GameResults
-                    .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber));
+                    .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber))!;
+            }
+        }
+
+        public IEnumerable<KeyValuePair<int, int>> LongestPoints
+        {
+            get
+            {
+                return CurrentResult?.GameResults
+                    .Where(gr => gr.Turns == CurrentResult.Longest)
+                    .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber))!;
             }
         }
 
@@ -74,6 +86,16 @@ namespace LcrSimulator.Core
             new Setting{ PlayerCount = 6, GameCount = 100 },
             new Setting{ PlayerCount = 7, GameCount = 100 },
         };
+
+        public IEnumerable<KeyValuePair<int, int>> ShortestPoints
+        {
+            get
+            {
+                return CurrentResult?.GameResults
+                    .Where(gr => gr.Turns == CurrentResult.Shortest)
+                    .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber))!;
+            }
+        }
 
         private void Cancel()
         {
