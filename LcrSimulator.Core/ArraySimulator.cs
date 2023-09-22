@@ -6,7 +6,7 @@
 
         private Random _random = new();
 
-        public SimulationResult Simulate(int playerCount, int gameCount)
+        public SimulationResult Simulate(int playerCount, int gameCount, CancellationToken cancelToken)
         {
             if (playerCount < 3 || playerCount > 100)
             {
@@ -21,6 +21,11 @@
             var results = new GameResult[gameCount];
             for (int i = 0; i < gameCount; i++)
             {
+                if (cancelToken.IsCancellationRequested)
+                {
+                    return null;
+                }
+
                 results[i] = Play(playerCount);
                 results[i].GameNumber = i + 1;
             }

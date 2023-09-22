@@ -134,7 +134,7 @@ namespace LcrSimulator.Core
                 _cancelSource = new CancellationTokenSource();
                 var simulationTask = Task.Factory.StartNew(() =>
                 {
-                    return _simulator.Simulate(setting.PlayerCount, setting.GameCount);
+                    return _simulator.Simulate(setting.PlayerCount, setting.GameCount, _cancelSource.Token);
                 }, _cancelSource.Token);
 
                 PlayCommand.NotifyCanExecuteChanged();
@@ -142,7 +142,7 @@ namespace LcrSimulator.Core
 
                 var result = await simulationTask;
 
-                if (_cancelSource.IsCancellationRequested)
+                if (result == null || _cancelSource.IsCancellationRequested)
                 {
                     return;
                 }

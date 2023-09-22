@@ -8,6 +8,6 @@ namespace LcrSimulator.Core
 {
     public interface ISimulator
     {
-        public SimulationResult Simulate(int players, int games);
+        public SimulationResult Simulate(int players, int games, CancellationToken cancellationToken);
     }
 }
