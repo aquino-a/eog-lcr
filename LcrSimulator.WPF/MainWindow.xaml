@@ -112,6 +112,55 @@
                     </charting:Chart.Series>
                 </charting:Chart>
             </Grid>
+            <ListView Grid.Row="1" ItemsSource="{Binding Players}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.Resources>
+                    <Style x:Key="PlayerFigureStyle" TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsWinner}" Value="true">
+                                <Setter Property="Background" Value="Orange" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="BorderThickness" Value="2" />
+                    </Style>
+                    <Style x:Key="NumberStyle" TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10" />
+                        <Setter Property="Height" Value="20" />
+                        <Setter Property="Width" Value="20" />
+                    </Style>
+                    <Style x:Key="WinnerTextStyle" TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsWinner}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Setter Property="TextAlignment" Value="Center" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid>
+                        </UniformGrid>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+
+                            <Border Style="{StaticResource PlayerFigureStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Number}" />
+                                    <TextBlock Grid.Column="1" Text="Winner!" Style="{StaticResource WinnerTextStyle}" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Window>
