@@ -22,16 +22,17 @@
             for (int i = 0; i < gameCount; i++)
             {
                 results[i] = Play(playerCount);
+                results[i].GameNumber = i + 1;
             }
 
-            var turns = results.Select(gr => gr.turns).ToArray();
+            var turns = results.Select(gr => gr.Turns).ToArray();
 
             return new SimulationResult
             {
                 Longest = turns.Max(),
                 Average = (int)turns.Average(),
                 Shortest = turns.Min(),
-                MostWins = results.GroupBy(gr => gr.winner)
+                MostWins = results.GroupBy(gr => gr.Winner)
                         .OrderByDescending(g => g.Count())
                         .First()
                         .Key,
@@ -146,10 +147,10 @@
             }
 
             return new GameResult
-            (
-                turnCount,
-                players.First(chips => chips > 0)
-            );
+            {
+                Turns = turnCount,
+                Winner = players.First(chips => chips > 0)
+            };
         }
     }
 }

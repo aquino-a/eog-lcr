@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LcrSimulator.Core
+﻿namespace LcrSimulator.Core
 {
-    public record GameResult(int turns, int winner);
+    //public record GameResult(int gameNum, int turns, int winner);
+    public class GameResult
+    {
+        public int GameNumber { get; set; }
+        public int Turns { get; set; }
+        public int Winner { get; set; }
+    }
 }
