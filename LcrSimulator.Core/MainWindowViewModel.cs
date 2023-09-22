@@ -10,6 +10,7 @@ namespace LcrSimulator.Core
         [NotifyPropertyChangedFor(nameof(AveragePoints))]
         [NotifyPropertyChangedFor(nameof(ShortestPoints))]
         [NotifyPropertyChangedFor(nameof(LongestPoints))]
+        [NotifyPropertyChangedFor(nameof(Players))]
         [NotifyCanExecuteChangedFor(nameof(PlayCommand))]
         [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
         public SimulationResult _currentResult;
@@ -75,6 +76,20 @@ namespace LcrSimulator.Core
 
         public int PlayerCount { get; set; }
 
+        public IEnumerable<Player> Players
+        {
+            get
+            {
+                if (CurrentResult == null)
+                {
+                    return Enumerable.Empty<Player>();
+                }
+
+                return Enumerable.Range(1, (int)CurrentResult.TotalPlayers)
+                    .Select(i => new Player { Number = i, IsWinner = i == CurrentResult.MostWins });
+            }
+        }
+
         public List<Setting> Presets { get; set; } = new List<Setting>()
         {
             new Setting{ PlayerCount = 3, GameCount = 100 },
@@ -97,7 +112,7 @@ namespace LcrSimulator.Core
             }
         }
 
-        private void Cancel()
+        public void Cancel()
         {
             if (_cancelSource == null)
             {

@@ -23,5 +23,6 @@
         public int MostWins { get; private set; }
 
         public int Shortest { get; private set; }
+        public int TotalPlayers { get; internal set; }
     }
 }

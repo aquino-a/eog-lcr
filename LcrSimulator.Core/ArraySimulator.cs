@@ -27,7 +27,10 @@
 
             var turns = results.Select(gr => gr.Turns).ToArray();
 
-            return new SimulationResult(results);
+            return new SimulationResult(results)
+            {
+                TotalPlayers = playerCount
+            };
         }
 
         private int[] GetInitialPlayers(int playerCount)
@@ -39,6 +42,19 @@
             }
 
             return players;
+        }
+
+        private int GetWinner(int[] players)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i] > 0)
+                {
+                    return i + 1;
+                }
+            }
+
+            throw new Exception("Winner not found!!");
         }
 
         private bool IsOver(int[] players)
@@ -140,7 +156,7 @@
             return new GameResult
             {
                 Turns = turnCount,
-                Winner = players.First(chips => chips > 0)
+                Winner = GetWinner(players)
             };
         }
     }
