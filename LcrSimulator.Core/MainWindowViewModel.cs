@@ -5,6 +5,9 @@ namespace LcrSimulator.Core
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        private static readonly int MAX_STEPS = 1_000;
+        private static readonly int MAX_STEPS_CUTOFF = 5_000;
+
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(GameResults))]
         [NotifyPropertyChangedFor(nameof(AveragePoints))]
@@ -57,6 +60,16 @@ namespace LcrSimulator.Core
         {
             get
             {
+                if (CurrentResult?.GameResults.Length > MAX_STEPS_CUTOFF)
+                {
+                    var length = CurrentResult?.GameResults.Length;
+                    var step = length / MAX_STEPS;
+
+                    return CurrentResult?.GameResults
+                        .Where((gr, i) => i % step == 0)
+                        .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber))!;
+                }
+
                 return CurrentResult?.GameResults
                     .Select(gr => new KeyValuePair<int, int>(gr.Turns, gr.GameNumber))!;
             }
