@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LcrSimulator.Core
+﻿namespace LcrSimulator.Core
 {
     public class ArraySimulator : ISimulator
     {
@@ -11,14 +9,14 @@ namespace LcrSimulator.Core
 
         public SimulationResult Simulate(int playerCount, int gameCount)
         {
-            if (playerCount < 3)
+            if (playerCount < 3 || playerCount > 100)
             {
-                throw new ArgumentException("Players must be greater than or equal to 3.");
+                throw new ArgumentException("Players must be greater than or equal to 3 and less than 100.");
             }
 
-            if (gameCount <= 0)
+            if (gameCount <= 0 || gameCount > 100_000)
             {
-                throw new ArgumentException("Game count must be greater than or equal to 1.");
+                throw new ArgumentException("Game count must be greater than or equal to 1 and less than 100,000.");
             }
 
             var results = new GameResult[gameCount];
@@ -74,11 +72,18 @@ namespace LcrSimulator.Core
         {
             var players = GetInitialPlayers(playerCount);
 
+            var playingCount = playerCount;
+
             int turnCount = 0;
             for (; !IsOver(players); turnCount++)
             {
                 for (var i = 0; i < playerCount; i++)
                 {
+                    if (playingCount == 1)
+                    {
+                        break;
+                    }
+
                     if (players[i] == 0)
                     {
                         continue;
@@ -102,6 +107,12 @@ namespace LcrSimulator.Core
                                     : i - 1;
 
                                 players[i]--;
+
+                                if (players[leftIndex] == 0)
+                                {
+                                    playingCount++;
+                                }
+
                                 players[leftIndex]++;
                                 break;
 
@@ -109,7 +120,13 @@ namespace LcrSimulator.Core
                                 var rightIndex = i == players.Length - 1
                                     ? 0
                                     : i + 1;
+
                                 players[i]--;
+                                if (players[rightIndex] == 0)
+                                {
+                                    playingCount++;
+                                }
+
                                 players[rightIndex]++;
                                 break;
 
@@ -120,6 +137,11 @@ namespace LcrSimulator.Core
                             default:
                                 throw new ArgumentException("roll must be L, C, R or .");
                         }
+                    }
+
+                    if (players[i] == 0)
+                    {
+                        playingCount--;
                     }
                 }
             }

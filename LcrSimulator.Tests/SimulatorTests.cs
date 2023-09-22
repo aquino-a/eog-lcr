@@ -27,7 +27,7 @@ namespace LcrSimulator.Tests
         public void Simulate()
         {
             var simulator = new ArraySimulator();
-            var result = simulator.Simulate(10, 10);
+            var result = simulator.Simulate(100, 100_000);
 
             Assert.That(result.Shortest, Is.GreaterThan(0));
             Assert.That(result.Longest, Is.GreaterThan(0));
