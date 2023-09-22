@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LcrSimulator.Core\LcrSimulator.Core.csproj" />
+  </ItemGroup>
+
 </Project>
