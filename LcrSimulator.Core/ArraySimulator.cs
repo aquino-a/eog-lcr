@@ -16,6 +16,11 @@ namespace LcrSimulator.Core
                 throw new ArgumentException("Players must be greater than or equal to 3.");
             }
 
+            if (gameCount <= 0)
+            {
+                throw new ArgumentException("Game count must be greater than or equal to 1.");
+            }
+
             var results = new GameResult[gameCount];
             for (int i = 0; i < gameCount; i++)
             {

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LcrSimulator.Core", "LcrSimulator.Core\LcrSimulator.Core.csproj", "{A8946C3E-D2FB-4ED5-838F-2061A6B01F5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LcrSimulator.Core", "LcrSimulator.Core\LcrSimulator.Core.csproj", "{A8946C3E-D2FB-4ED5-838F-2061A6B01F5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LcrSimulator.WPF", "LcrSimulator.WPF\LcrSimulator.WPF.csproj", "{84F42EDF-8D14-482B-8820-2A1CF9E7495A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LcrSimulator.WPF", "LcrSimulator.WPF\LcrSimulator.WPF.csproj", "{84F42EDF-8D14-482B-8820-2A1CF9E7495A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LcrSimulator.Tests", "LcrSimulator.Tests\LcrSimulator.Tests.csproj", "{1D2C2476-A1CE-40F3-89A3-19EC5666DBDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{84F42EDF-8D14-482B-8820-2A1CF9E7495A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84F42EDF-8D14-482B-8820-2A1CF9E7495A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84F42EDF-8D14-482B-8820-2A1CF9E7495A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D2C2476-A1CE-40F3-89A3-19EC5666DBDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D2C2476-A1CE-40F3-89A3-19EC5666DBDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D2C2476-A1CE-40F3-89A3-19EC5666DBDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D2C2476-A1CE-40F3-89A3-19EC5666DBDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
