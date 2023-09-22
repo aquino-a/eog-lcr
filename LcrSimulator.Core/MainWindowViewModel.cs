@@ -86,6 +86,11 @@ namespace LcrSimulator.Core
 
                 var result = await simulationTask;
 
+                if (_cancelSource.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 CurrentResult = result;
             }
             finally
