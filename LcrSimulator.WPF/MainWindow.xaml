@@ -60,6 +60,7 @@
                             <charting:LineSeries.DataPointStyle>
                                 <Style TargetType="charting:LineDataPoint">
                                     <Setter Property="Template" Value="{x:Null}" />
+                                    <Setter Property="Background" Value="Red" />
                                 </Style>
                             </charting:LineSeries.DataPointStyle>
                         </charting:LineSeries>
