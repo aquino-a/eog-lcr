@@ -8,14 +8,14 @@
 
         public SimulationResult Simulate(int playerCount, int gameCount, CancellationToken cancelToken)
         {
-            if (playerCount < 3 || playerCount > 100)
+            if (playerCount < 3)
             {
-                throw new ArgumentException("Players must be greater than or equal to 3 and less than 100.");
+                throw new ArgumentException("Players must be greater than or equal to 3.");
             }
 
-            if (gameCount <= 0 || gameCount > 100_000)
+            if (gameCount <= 0)
             {
-                throw new ArgumentException("Game count must be greater than or equal to 1 and less than 100,000.");
+                throw new ArgumentException("Game count must be greater than or equal to 1.");
             }
 
             var results = new GameResult[gameCount];
